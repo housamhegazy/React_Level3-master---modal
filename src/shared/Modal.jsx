@@ -26,8 +26,12 @@ function Modal({ closeModel,children }) {
             align-items: center;
             justify-content: center;
             position: fixed;
-            scale: 1;
-          transform: translateY(0);
+            animation:mymove .8s 
+          }
+
+          @keyframes mymove{
+            0% {scale:0;  transform: translateY(-100vh);}
+            100% {scale:1;  transform: translateY(0);}
           }
            `
         }
