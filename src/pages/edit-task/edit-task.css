@@ -1,0 +1,96 @@
+.edit-task {
+  min-height: calc(100vh - 133px);
+}
+
+/* title */
+
+.title {}
+
+.edit-task .title-input {
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 11px;
+}
+
+.fa-pen-to-square {
+  font-size: 18px;
+  transition: .2s;
+}
+
+.fa-pen-to-square:hover {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* sub tasks section */
+.edit-task section.sub-task {
+  max-width: 620px;
+  margin: auto
+}
+
+.edit-task section.sub-task .parent-time {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.edit-task .parent-time #checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: teal;
+}
+
+.edit-task section.sub-task .parent-time .parent-check {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.edit-task section.sub-task .parent-time label {
+  position: relative;
+  bottom: 3px;
+}
+
+.edit-task .card-task {
+  box-shadow: 0 5px 30px 0 rgb(0 0 0/15%);
+  background-color: rgb(72, 73, 73);
+  border-radius: 5px;
+  padding: 16px;
+  transition: .2s;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 11px;
+}
+
+.edit-task .card-task:hover {
+  background-color: rgb(136, 138, 138);
+  border-left: 4px solid wheat;
+}
+
+.edit-task .card-task .fa-trash {
+  color: #eb9c9c;
+}
+
+/* add more btn & delete btn */
+.btns {
+  flex-direction: column;
+}
+
+.btns .add-more-btn {
+  background-color: teal;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  border: none;
+}
+
+.Light .edit-task .title-input,
+.Light .fa-pen-to-square,
+.Light .time,
+.Light label{
+  color: black!important;
+}
