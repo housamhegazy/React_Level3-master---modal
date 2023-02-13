@@ -1,45 +1,17 @@
-
-.parent-of-form{
-  position: fixed;
-  width:100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #33333388;
-  
-}
-.modal{
-  background-color: whitesmoke;
-  width: 400px;
-  height: 333px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  transition: 1s;
-  scale: 1;
-transform: translateY(0);
-}
-
-
-
-
-.forgot-pass{
+.forgot-pass {
   font-size: 19px;
   cursor: pointer;
   font-weight: normal;
 }
 
-.forgot-pass:hover{
+.forgot-pass:hover {
   font-size: 20px;
- 
+
   font-weight: bold;
   transition: 0.3s;
 }
 
-.close .fa-xmark{
+.close .fa-xmark {
   font-size: 29px;
   color: #444;
   position: absolute;
@@ -47,19 +19,17 @@ transform: translateY(0);
   right: 22px;
 }
 
-.close .fa-xmark:hover{
+.close .fa-xmark:hover {
   color: orange;
   font-size: 30px;
   transform: rotate(180deg);
   transition: 0.3s;
 }
 
-.check-email{
+.check-email {
   color: #333;
   font-size: 16px;
   margin-top: 25px;
   line-height: 25px;
-  
-}
 
- 
+}
