@@ -102,3 +102,12 @@ add new task Btn
 .add-task-content{
   text-align: left  ;
 }
+
+
+.home .modal ul li{
+  font-size: 13px;
+  color:#333;
+  list-style-type: circle;
+  list-style-position: inside;
+  margin-bottom: 6px;
+}

@@ -15,11 +15,17 @@ import { useState } from "react";
 
 const Home = () => {
   const [user, loading, error] = useAuthState(auth);
-  console.log(user);
+
+  const [array, setArray] = useState([]);
+  const [subtask, setsubtask] = useState("");
+const addSubTask = ()=>{
+  array.push(subtask)
+  setsubtask("")//to empty input after submit 
+}
+
 
   const sendAgain = () => {
     sendEmailVerification(auth.currentUser).then(() => {
-      console.log("Email verification sent!");
       // ...
     });
   };
@@ -167,18 +173,38 @@ const Home = () => {
                   />
                   <div>
                     <input
-                      onChange={(eo) => {}}
+                      onChange={(eo) => {
+                        setsubtask(eo.target.value);
+                      }}
                       required
                       placeholder=" details : "
                       type="text"
+                      value={subtask}
                     />
-                    <button onClick={(e)=>{
-                    e.preventDefault();
-                  }}className="add">add</button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        addSubTask();
+                      }}
+                      className="add"
+                    >
+                      add
+                    </button>
                   </div>
-                  <button onClick={(e)=>{
-                    e.preventDefault();
-                  }}>submit</button>
+
+                  <ul>
+                    {array.map((ele) => (
+                      <li key={ele}>{ele}</li>
+                    ))}
+                  </ul>
+
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                    }}
+                  >
+                    submit
+                  </button>
                 </div>
               </Modal>
             )}

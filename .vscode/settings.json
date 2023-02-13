@@ -6,6 +6,7 @@
     "setpassword",
     "setreset",
     "setshow",
+    "setsubtask",
     "Signin"
   ]
 }

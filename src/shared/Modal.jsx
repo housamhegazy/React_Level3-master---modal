@@ -26,8 +26,9 @@ function Modal({ closeModel,children }) {
             align-items: center;
             justify-content: center;
             position: fixed;
-            animation:mymove .8s 
-          }
+            animation:mymove .8s ;
+            overflow-y: scroll;
+          } 
 
           @keyframes mymove{
             0% {scale:0;  transform: translateY(-100vh);}

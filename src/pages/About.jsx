@@ -3,7 +3,7 @@ import Footer from "../comp/Footer";
 import Loading from "../comp/Loading";
 
 import { Helmet } from "react-helmet-async";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/config";
@@ -41,7 +41,9 @@ const About = () => {
             <title>About Page</title>
           </Helmet>
           <Header />
-          <main>About page</main>
+          <main>
+          about page
+          </main>
           <Footer />
         </>
       );
