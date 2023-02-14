@@ -4,9 +4,13 @@ import Loading from "../../comp/Loading";
 import Erroe404 from "../erroe404";
 import { Helmet } from "react-helmet-async";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../firebase/config";
+import { auth,db } from "../../firebase/config";
 import { Link } from "react-router-dom";
 import { sendEmailVerification } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore"; 
+import ReactLoading from 'react-loading';
+
+
 
 // Level 3
 import "./Home.css";
@@ -18,11 +22,16 @@ const Home = () => {
 
   const [array, setArray] = useState([]);
   const [subtask, setsubtask] = useState("");
+  const [taskTitle,settaskTitle] = useState('')
+  const [showSubmit,setshowSubmit]  = useState(false)
+  const [showMsg,setshowMsg] = useState(false)
+
 const addSubTask = ()=>{
   array.push(subtask)
   setsubtask("")//to empty input after submit 
 }
 
+const taskId = new Date().getTime();
 
   const sendAgain = () => {
     sendEmailVerification(auth.currentUser).then(() => {
@@ -166,10 +175,11 @@ const addSubTask = ()=>{
               <Modal closeModel={closeModel}>
                 <div className="add-task-content">
                   <input
-                    onChange={(eo) => {}}
+                    onChange={(eo) => {settaskTitle(eo.target.value)}}
                     required
                     placeholder=" add title : "
                     type="text"
+                    value={taskTitle}
                   />
                   <div>
                     <input
@@ -185,6 +195,7 @@ const addSubTask = ()=>{
                       onClick={(e) => {
                         e.preventDefault();
                         addSubTask();
+                        
                       }}
                       className="add"
                     >
@@ -194,20 +205,35 @@ const addSubTask = ()=>{
 
                   <ul>
                     {array.map((ele) => (
-                      <li key={ele}>{ele}</li>
+                      <li key={ele} >{ele}</li>
                     ))}
                   </ul>
 
                   <button
-                    onClick={(e) => {
+                    onClick={async(e) => {
+                      setshowSubmit(true)
                       e.preventDefault();
+                      await setDoc(doc(db, user.uid, `${taskId}`), {
+                        title: taskTitle,
+                        tasks: array,
+                        id:taskId
+                      });
+                      setshowSubmit(false);
+                      setshowMsg(true);
+                      setTimeout(()=>{
+                        setshowMsg(false);
+                      },4000)
+                      settaskTitle("")
+                      setArray([]);
+                      closeModel()
                     }}
                   >
-                    submit
+                    {showSubmit ? <ReactLoading type={"spin"} color={"red"} height={20} width={20}  />: "submit"}
                   </button>
                 </div>
               </Modal>
             )}
+            <p style={{right:showMsg? '20px': "-100vw"}} className="showSuccessMsg">tasks added successfully  <i className="fa-solid fa-check"></i></p>
           </main>
 
           <Footer />
