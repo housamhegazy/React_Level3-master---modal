@@ -12,6 +12,8 @@ function HomeModule({
   addSubTask,
   taskTitle,
   settaskTitle,
+  creatSubTaskFunc,
+  creatTitleFunc
 }) {
   return (
     <Modal closeModel={closeModel}>
@@ -19,7 +21,7 @@ function HomeModule({
         {/* store input value of title in useState */}
         <input
           onChange={(eo) => {
-            settaskTitle(eo.target.value);
+            creatTitleFunc(eo)
           }}
           required
           placeholder=" add title : "
@@ -30,7 +32,7 @@ function HomeModule({
           {/* store input value in useState */}
           <input
             onChange={(eo) => {
-              setsubtask(eo.target.value);
+              creatSubTaskFunc(eo)
             }}
             required
             placeholder=" details : "
@@ -49,6 +51,7 @@ function HomeModule({
           </button>
         </div>
         {/* get tasks list from array to page*/}
+        
         <ul>
           {array.map((ele) => (
             <li key={`${Math.random()}`}>{ele}</li>

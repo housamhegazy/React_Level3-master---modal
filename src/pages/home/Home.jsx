@@ -37,9 +37,19 @@ const Home = () => {
       // ...
     });
   };
+  // get subtask from input value
+  const creatTitleFunc = (eo) => {
+      settaskTitle(eo.target.value);
+  };
+  //send input value to subtask function
+  const creatSubTaskFunc = (eo) => {
+    setsubtask(eo.target.value);
+  };
   //push subtask value to array func
   const addSubTask = () => {
-    array.push(subtask);
+    if (!array.includes(subtask) && subtask !== "") {
+      array.push(subtask);
+    }
     setsubtask(""); //to empty input after submit
   };
 
@@ -49,12 +59,17 @@ const Home = () => {
   };
   const closeModel = () => {
     setshowModal(false);
+    //when close model empty array and input fields
+    setArray([]);
+    settaskTitle("");
+    setsubtask("")
   };
   // send data to firebase func
   const submitBtnFunc = async (eo) => {
     eo.preventDefault();
-    setshowSubmit(true);
-    await setDoc(doc(db, user.uid, `${taskId}`), {
+    if(array.length !== 0){
+      setshowSubmit(true);
+      await setDoc(doc(db, user.uid, `${taskId}`), {
       title: taskTitle,
       tasks: array,
       id: taskId,
@@ -67,6 +82,8 @@ const Home = () => {
     settaskTitle("");
     setArray([]);
     closeModel();
+    }
+    
   };
   if (error) {
     return <Erroe404 />;
@@ -203,6 +220,8 @@ const Home = () => {
                 addSubTask={addSubTask}
                 taskTitle={taskTitle}
                 settaskTitle={settaskTitle}
+                creatSubTaskFunc={creatSubTaskFunc}
+                creatTitleFunc={creatTitleFunc}
               />
             )}
             {/* show message of success sending */}

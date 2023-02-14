@@ -1,12 +1,11 @@
 import { Helmet } from "react-helmet-async";
 
-function Modal({ closeModel,children }) {
+function Modal({ closeModel, children }) {
   return (
     <div className="parent-of-form">
       <Helmet>
         <style type="text/css">
-        {
-          `
+          {`
           .parent-of-form{
             position: fixed;
             width:100%;
@@ -27,7 +26,7 @@ function Modal({ closeModel,children }) {
             justify-content: center;
             position: fixed;
             animation:mymove .8s ;
-            overflow-y: scroll;
+            overflow-y: auto;
 
           } 
 
@@ -39,10 +38,19 @@ function Modal({ closeModel,children }) {
             height:100%;
             padding-top:50px
           }
-           `
+          .modal::-webkit-scrollbar {
+            width: .5em;
         }
-
-
+        .modal::-webkit-scrollbar-track {
+          -webkit-box-shadow:inset 0 0 16px 2px rgb(44 8 78);
+      }
+      .modal::-webkit-scrollbar-thumb {
+        background-color: rgb(53 27 78);
+        -webkit-box-shadow:inset 0 0 6px 4px rgb(99 45 151);
+        border-radius:5px;
+      }
+      
+           `}
         </style>
       </Helmet>
       <form className="modal">
@@ -60,10 +68,3 @@ function Modal({ closeModel,children }) {
   );
 }
 export default Modal;
-
-
-
-
-
-
-
