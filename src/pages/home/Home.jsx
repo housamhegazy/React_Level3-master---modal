@@ -4,50 +4,70 @@ import Loading from "../../comp/Loading";
 import Erroe404 from "../erroe404";
 import { Helmet } from "react-helmet-async";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth,db } from "../../firebase/config";
+import { auth, db } from "../../firebase/config";
 import { Link } from "react-router-dom";
 import { sendEmailVerification } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore"; 
-import ReactLoading from 'react-loading';
-
-
+import { doc, setDoc } from "firebase/firestore";
+import HomeModule from "./HomeModule";
 
 // Level 3
 import "./Home.css";
-import Modal from "shared/Modal";
 import { useState } from "react";
 
 const Home = () => {
   const [user, loading, error] = useAuthState(auth);
-
+  //==========================================
+  // useState and variables
+  //==========================================
   const [array, setArray] = useState([]);
   const [subtask, setsubtask] = useState("");
-  const [taskTitle,settaskTitle] = useState('')
-  const [showSubmit,setshowSubmit]  = useState(false)
-  const [showMsg,setshowMsg] = useState(false)
+  const [taskTitle, settaskTitle] = useState("");
+  const [showSubmit, setshowSubmit] = useState(false);
+  const [showMsg, setshowMsg] = useState(false);
+  const [showModal, setshowModal] = useState(false);
+  const taskId = new Date().getTime();
 
-const addSubTask = ()=>{
-  array.push(subtask)
-  setsubtask("")//to empty input after submit 
-}
+  //==========================================
+  // Functions
+  //==========================================
 
-const taskId = new Date().getTime();
-
+  //send email verify
   const sendAgain = () => {
     sendEmailVerification(auth.currentUser).then(() => {
       // ...
     });
   };
+  //push subtask value to array func
+  const addSubTask = () => {
+    array.push(subtask);
+    setsubtask(""); //to empty input after submit
+  };
 
-  // open and close model
-  const [showModal, setshowModal] = useState(false);
+  // open and close model functions
   const openModel = () => {
     setshowModal(true);
   };
   const closeModel = () => {
     setshowModal(false);
   };
-
+  // send data to firebase func
+  const submitBtnFunc = async (eo) => {
+    eo.preventDefault();
+    setshowSubmit(true);
+    await setDoc(doc(db, user.uid, `${taskId}`), {
+      title: taskTitle,
+      tasks: array,
+      id: taskId,
+    });
+    setshowSubmit(false);
+    setshowMsg(true);
+    setTimeout(() => {
+      setshowMsg(false);
+    }, 4000);
+    settaskTitle("");
+    setArray([]);
+    closeModel();
+  };
   if (error) {
     return <Erroe404 />;
   }
@@ -170,70 +190,28 @@ const taskId = new Date().getTime();
                 Add new task <i className="fa-solid fa-plus"></i>
               </button>
             </section>
-            {/* show modal whene press add tasks */}
+            {/* show modal when press add tasks */}
             {showModal && (
-              <Modal closeModel={closeModel}>
-                <div className="add-task-content">
-                  <input
-                    onChange={(eo) => {settaskTitle(eo.target.value)}}
-                    required
-                    placeholder=" add title : "
-                    type="text"
-                    value={taskTitle}
-                  />
-                  <div>
-                    <input
-                      onChange={(eo) => {
-                        setsubtask(eo.target.value);
-                      }}
-                      required
-                      placeholder=" details : "
-                      type="text"
-                      value={subtask}
-                    />
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        addSubTask();
-                        
-                      }}
-                      className="add"
-                    >
-                      add
-                    </button>
-                  </div>
-
-                  <ul>
-                    {array.map((ele) => (
-                      <li key={ele} >{ele}</li>
-                    ))}
-                  </ul>
-
-                  <button
-                    onClick={async(e) => {
-                      setshowSubmit(true)
-                      e.preventDefault();
-                      await setDoc(doc(db, user.uid, `${taskId}`), {
-                        title: taskTitle,
-                        tasks: array,
-                        id:taskId
-                      });
-                      setshowSubmit(false);
-                      setshowMsg(true);
-                      setTimeout(()=>{
-                        setshowMsg(false);
-                      },4000)
-                      settaskTitle("")
-                      setArray([]);
-                      closeModel()
-                    }}
-                  >
-                    {showSubmit ? <ReactLoading type={"spin"} color={"red"} height={20} width={20}  />: "submit"}
-                  </button>
-                </div>
-              </Modal>
+              <HomeModule
+                closeModel={closeModel}
+                setshowMsg={setshowMsg}
+                showSubmit={showSubmit}
+                submitBtnFunc={submitBtnFunc}
+                array={array}
+                subtask={subtask}
+                setsubtask={setsubtask}
+                addSubTask={addSubTask}
+                taskTitle={taskTitle}
+                settaskTitle={settaskTitle}
+              />
             )}
-            <p style={{right:showMsg? '20px': "-100vw"}} className="showSuccessMsg">tasks added successfully  <i className="fa-solid fa-check"></i></p>
+            {/* show message of success sending */}
+            <p
+              style={{ right: showMsg ? "20px" : "-100vw" }}
+              className="showSuccessMsg"
+            >
+              tasks added successfully <i className="fa-solid fa-check"></i>
+            </p>
           </main>
 
           <Footer />

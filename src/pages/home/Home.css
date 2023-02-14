@@ -127,3 +127,7 @@ add new task Btn
 .fa-check{
   color:green
 }
+
+.submitBtn{
+  margin-bottom: 10px;
+}

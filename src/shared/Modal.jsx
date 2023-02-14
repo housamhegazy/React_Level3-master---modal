@@ -28,11 +28,16 @@ function Modal({ closeModel,children }) {
             position: fixed;
             animation:mymove .8s ;
             overflow-y: scroll;
+
           } 
 
           @keyframes mymove{
             0% {scale:0;  transform: translateY(-100vh);}
             100% {scale:1;  transform: translateY(0);}
+          }
+          .add-task-content{
+            height:100%;
+            padding-top:50px
           }
            `
         }
