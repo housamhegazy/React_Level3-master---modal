@@ -7,8 +7,11 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase/config";
 import { Link } from "react-router-dom";
 import { sendEmailVerification } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
 import HomeModule from "./HomeModule";
+import { doc, setDoc } from "firebase/firestore"; 
+import AllTasksFunc from "./AllTasksPage";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 // Level 3
 import "./Home.css";
@@ -16,6 +19,12 @@ import { useState } from "react";
 
 const Home = () => {
   const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if(!user && !loading){
+      navigate("/")
+    }
+  })
   //==========================================
   // useState and variables
   //==========================================
@@ -183,18 +192,9 @@ const Home = () => {
             </section>
 
             {/* show all tasks  */}
-            <section className="all-tasks flex mt">
-              <article dir="auto" className="one-task">
-                <Link to="/edit-task">
-                  <h2>new task</h2>
-                  <ul>
-                    <li>sub task</li>
-                    <li>sub task</li>
-                  </ul>
-                  <p className="time">one day ago</p>
-                </Link>
-              </article>
-            </section>
+          
+              <AllTasksFunc user={user}/>
+          
 
             {/* add new task  Btn */}
             <section className="mt">

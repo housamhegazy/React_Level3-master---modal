@@ -43,6 +43,7 @@ show all tasks
   width: 300px;
   border-radius: 5px;
   transition: .2s;
+  position: relative;
 }
 .home .all-tasks .one-task:hover{
   border: 2px solid antiquewhite;
@@ -69,8 +70,20 @@ show all tasks
   margin-right: 9px;
   color:aqua;
   line-height: 19px;
+  position: absolute;
+  bottom: 10px;
+  right: 0;
 }
-
+.home .all-tasks .one-task .info p{
+  font-size: 11px;
+  text-align: end;
+  margin-right: 9px;
+  color:aqua;
+  line-height: 19px;
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+}
 
 
 

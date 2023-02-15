@@ -42,11 +42,9 @@ const Profile = () => {
   }
 
   if (error) {
-    return (
-      <div>
-        <p>Error: {error}</p>
-      </div>
-    );
+    return (  <div>
+      <p>Error: {error}</p>
+    </div>)
   }
 
   if (user) {
