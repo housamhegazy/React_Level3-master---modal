@@ -23,7 +23,7 @@ function AllTasksFunc({user}) {
       {value.docs.map((item,index)=>{
         return (
           <article key={item.data().id} dir="auto" className="one-task">
-            <Link to="/edit-task">
+            <Link to={`/edit-task/${item.data().id}`}>
               <h2>{index+1}-{item.data().title}</h2>
               <ul>
                 {item.data().tasks.map((ele,index)=>{
@@ -37,9 +37,8 @@ function AllTasksFunc({user}) {
                 })}
                 
               </ul>
-              <p className="time">one day ago</p>
-              <div className="info">
-                <p>created at : <Moment fromNow date={item.data().id} /></p>
+              <div className="time">
+                <p><Moment fromNow date={item.data().id} /></p>
               </div>
             </Link>
         </article>

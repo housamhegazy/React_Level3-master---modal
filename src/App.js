@@ -11,6 +11,7 @@ import Signin from './pages/signin/Singin';
 import Signup from './pages/Signup';
 import EditTask from "pages/edit-task/Edit-Task";
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
     element: <Profile />,
   },
   {
-    path: "/edit-task",
+    path: "/edit-task/:userId",
     element: <EditTask />,
   },
 ]);

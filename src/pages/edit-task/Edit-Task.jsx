@@ -2,67 +2,70 @@ import "./edit-task.css";
 import { Helmet } from "react-helmet-async";
 import Header from "comp/header";
 import Footer from "comp/Footer";
+import { auth } from "../../firebase/config";
+import Loading from "comp/Loading";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import TitleSection from "./1-TitleSection";
+import SubTasksSection from "./2-SubTasksSection";
+import BtnsSection from "./3-BtnsSection";
+import { useParams } from "react-router-dom";
+
 function EditTask() {
-  return (
-    <div>
-      <Helmet>
-        <title>HOME Page</title>
-      </Helmet>
-      <Header />
-      <div className="edit-task">
-        {/* title */}
-        <section className="title center">
-          <h1>
-            <input
-              className="title-input center"
-              type="text"
-              defaultValue={"hello"}
-            />
-            <i className="fa-regular fa-pen-to-square"></i>
-          </h1>
-        </section>
+  let { userId } = useParams();
+  const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!user && !loading) {
+      navigate("/");
+    }
+    if (user) {
+      if (!user.emailVerified) {
+        navigate("/");
+      }
+    }
+  });
+  if (error) {
+    return (
+      <>
+        <Helmet>
+          <title>error Page</title>
+        </Helmet>
+        <Header />
+        <h1>error : {error.message}</h1>
+        <Footer />
+      </>
+    );
+  }
 
-        {/* sub tasks section */}
-        <section className="sub-task">
-          <div className="parent-time">
-            <p className="time">created 6 days ago</p>
-            <div className="parent-check">
-              <input
-                type="checkbox"
-                id="checkbox"
-                name="vehicle3"
-                value="Boat"
-              />
-              <label htmlFor="checkbox" className="checkmark">
-                {" "}
-                completed
-              </label>
-            </div>
+  if (loading) {
+    return <Loading />;
+  }
+  if (user) {
+    if (user.emailVerified) {
+      return (
+        <div>
+          <Helmet>
+            <title>edit task Page</title>
+          </Helmet>
+          <Header />
+          <div className="edit-task">
+            {/* title */}
+
+            <TitleSection user={user} userId={userId} />
+
+            {/* sub tasks section */}
+
+            <SubTasksSection user={user} userId={userId} />
+
+            {/* add more btn & delete btn */}
+            <BtnsSection user={user} userId={userId} />
           </div>
-          <ul className="list">
-            <li className="card-task flex">
-              <p>sub task</p>
-              <i className="fa-solid fa-trash"></i>
-            </li>
-            <li className="card-task flex">
-              <p>sub task</p>
-              <i className="fa-solid fa-trash"></i>
-            </li>
-          </ul>
-        </section>
-
-        {/* add more btn & delete btn */}
-        <section className="btns flex mtt">
-          <button className="add-more-btn">
-            add more <i className="fa-solid fa-plus"></i>
-          </button>
-          <button className="delete">
-            Delete
-          </button>
-        </section>
-      </div>
-      <Footer />
-    </div>
-  );
+          <Footer />
+        </div>
+      );
+    }
+  }
 }
 export default EditTask;
