@@ -79,6 +79,7 @@ const Home = () => {
     if(array.length !== 0){
       setshowSubmit(true);
       await setDoc(doc(db, user.uid, `${taskId}`), {
+      completed:false,
       title: taskTitle,
       tasks: array,
       id: taskId,

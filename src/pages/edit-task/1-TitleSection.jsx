@@ -1,9 +1,10 @@
 import { db } from "../../firebase/config";
-// import Loading from "../../comp/Loading";
 import { doc } from 'firebase/firestore';
 import { useDocument } from 'react-firebase-hooks/firestore';
 
-export default function TitleSection({ user , userId}) {
+
+
+export default function TitleSection({ user , userId,titleOnChange}) {
     const [value, loading, error] = useDocument(doc(db, user.uid,userId))
   if (error) {
     return (
@@ -20,7 +21,9 @@ export default function TitleSection({ user , userId}) {
     return (
       <section className="title center">
         <h1>
-          <input
+          <input onChange={(eo)=>{
+            titleOnChange(eo);
+          }}
             className="title-input center"
             type="text"
             defaultValue={value.data().title}

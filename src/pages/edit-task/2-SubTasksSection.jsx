@@ -14,7 +14,9 @@ export default function SubTasksSection({ user , userId}) {
         <div className="parent-time">
           <p className="time"><Moment fromNow date={value.data().id} /></p>
           <div className="parent-check">
-            <input type="checkbox" id="checkbox" name="vehicle3" value="Boat" />
+            <input onChange={()=>{
+              
+            }} checked={value.data().completed} type="checkbox" id="checkbox" name="vehicle3" value="Boat" />
             <label htmlFor="checkbox" className="checkmark">
               {" "}
               completed
