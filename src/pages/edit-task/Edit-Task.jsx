@@ -5,14 +5,16 @@ import Footer from "comp/Footer";
 import { auth } from "../../firebase/config";
 import Loading from "comp/Loading";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TitleSection from "./1-TitleSection";
 import SubTasksSection from "./2-SubTasksSection";
 import BtnsSection from "./3-BtnsSection";
 import { useParams } from "react-router-dom";
-import { doc,updateDoc } from "firebase/firestore";
+import { arrayRemove,doc,updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
+import { async } from "@firebase/util";
+
 
 function EditTask() {
   let { userId } = useParams();
@@ -40,11 +42,24 @@ const titleOnChange = async(eo)=>{
 //===============================
 //subtasks section functions 
 //===============================
-const completeCheckBox = (eo)=>{
+const completeCheckBox = async(eo)=>{
   eo.preventDefault()
+  if(eo.target.checked){
+    await updateDoc(doc(db,user.uid,userId),{
+      completed : true
+    })
+
+  }else{
+    await updateDoc(doc(db,user.uid,userId),{
+      completed : false
+    })
+  }
 }
-const trashIcon = (eo) => {  
-  eo.preventDefault()
+const trashIcon =async (ele) => {  
+  await updateDoc(doc(db, user.uid, userId), {
+    tasks: arrayRemove(ele),
+  });
+
 }
 //===============================
 //Btns section functions 
@@ -108,7 +123,7 @@ const DeleteBtn = (eo) => {
 
             {/* sub tasks section */}
 
-            <SubTasksSection user={user} userId={userId} />
+            <SubTasksSection user={user} userId={userId} completeCheckBox={completeCheckBox} trashIcon={trashIcon} />
 
             {/* add more btn & delete btn */}
             <BtnsSection user={user} userId={userId} />

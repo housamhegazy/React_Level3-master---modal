@@ -5,7 +5,7 @@ import { doc } from 'firebase/firestore';
 import { useDocument } from 'react-firebase-hooks/firestore';
 import Moment from "react-moment";
 
-export default function SubTasksSection({ user , userId}) {
+export default function SubTasksSection({ user , userId,completeCheckBox,trashIcon}) {
   const [value, loading, error] = useDocument(doc(db, user.uid,userId))
 
   if(value){
@@ -14,8 +14,8 @@ export default function SubTasksSection({ user , userId}) {
         <div className="parent-time">
           <p className="time"><Moment fromNow date={value.data().id} /></p>
           <div className="parent-check">
-            <input onChange={()=>{
-              
+            <input onChange={(eo)=>{
+              completeCheckBox(eo)
             }} checked={value.data().completed} type="checkbox" id="checkbox" name="vehicle3" value="Boat" />
             <label htmlFor="checkbox" className="checkmark">
               {" "}
@@ -28,7 +28,9 @@ export default function SubTasksSection({ user , userId}) {
           return(
           <li key={ele} className="card-task flex">
             <p>{ele}</p>
-            <i className="fa-solid fa-trash"></i>
+            <i onClick={()=>{
+              trashIcon(ele)
+            }} className="fa-solid fa-trash"></i>
           </li>
       
           )
