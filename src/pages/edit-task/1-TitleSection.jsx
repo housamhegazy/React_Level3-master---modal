@@ -1,11 +1,12 @@
 import { db } from "../../firebase/config";
-import { doc } from 'firebase/firestore';
-import { useDocument } from 'react-firebase-hooks/firestore';
+import { doc } from "firebase/firestore";
+import { useDocument } from "react-firebase-hooks/firestore";
+import React, { useRef } from "react";
 
+export default function TitleSection({ user, userId, titleOnChange }) {
+  const [value, loading, error] = useDocument(doc(db, user.uid, userId));
+  const inputElement = useRef(null);
 
-
-export default function TitleSection({ user , userId,titleOnChange}) {
-    const [value, loading, error] = useDocument(doc(db, user.uid,userId))
   if (error) {
     return (
       <section>
@@ -21,14 +22,21 @@ export default function TitleSection({ user , userId,titleOnChange}) {
     return (
       <section className="title center">
         <h1>
-          <input onChange={(eo)=>{
-            titleOnChange(eo);
-          }}
+          <input
+            onChange={(eo) => {
+              titleOnChange(eo);
+            }}
             className="title-input center"
             type="text"
             defaultValue={value.data().title}
+            ref={inputElement}
           />
-          <i className="fa-regular fa-pen-to-square"></i>
+          <i
+            onClick={() => {
+              inputElement.current.focus();//current : the element
+            }}
+            className="fa-regular fa-pen-to-square"
+          ></i>
         </h1>
       </section>
     );
