@@ -98,6 +98,12 @@
   border-radius: 5px;
   background-color: rgb(72, 73, 73);
   padding: 5px;
+  animation: openBox .9s ;
+}
+@keyframes openBox{
+  0%{scale:0};
+  50%{scale:1.3};
+  100%{scale:1};
 }
 .add-task{
   margin:0

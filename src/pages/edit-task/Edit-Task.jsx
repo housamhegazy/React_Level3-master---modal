@@ -11,13 +11,14 @@ import TitleSection from "./1-TitleSection";
 import SubTasksSection from "./2-SubTasksSection";
 import BtnsSection from "./3-BtnsSection";
 import { useParams } from "react-router-dom";
-import { arrayRemove, doc, updateDoc } from "firebase/firestore";
+import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import { async } from "@firebase/util";
 
 function EditTask() {
   let { userId } = useParams();
   const [user, loading, error] = useAuthState(auth);
+  const [showData, setshowData] = useState(false);//used in delete btn of all Doc
   const navigate = useNavigate();
   useEffect(() => {
     if (!user && !loading) {
@@ -63,11 +64,13 @@ function EditTask() {
 
   const AddMoreBtn = async (eo) => {
     eo.preventDefault();
-    
   };
 
-  const DeleteBtn = (eo) => {
+  const DeleteBtn = async (eo) => {
     eo.preventDefault();
+    setshowData(true); //when showData is true : dont render info of task bqz it is deleted
+    await deleteDoc(doc(db, user.uid, userId));
+    navigate("/", { replace: true }); // replace:true : to avoid back arrow onclick
   };
 
   if (error) {
@@ -86,8 +89,18 @@ function EditTask() {
   if (loading) {
     return <Loading />;
   }
+
   if (user) {
     if (user.emailVerified) {
+      if (showData) {
+        return (
+          <>
+            <header />
+            <Loading />;
+            <Footer />
+          </>
+        );
+      }
       return (
         <div>
           <Helmet>
@@ -96,7 +109,6 @@ function EditTask() {
           <Header />
           <div className="edit-task">
             {/* title */}
-
             <TitleSection
               user={user}
               userId={userId}
@@ -109,10 +121,12 @@ function EditTask() {
               user={user}
               userId={userId}
               completeCheckBox={completeCheckBox}
-              trashIcon={trashIcon} AddMoreBtn={AddMoreBtn}/>
+              trashIcon={trashIcon}
+              AddMoreBtn={AddMoreBtn}
+            />
 
             {/* add more btn & delete btn */}
-            <BtnsSection user={user} userId={userId}/>
+            <BtnsSection user={user} userId={userId} DeleteBtn={DeleteBtn} />
           </div>
           <Footer />
         </div>

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { db } from "../../firebase/config";
-// import Loading from "../../comp/Loading";
 import { doc } from "firebase/firestore";
 import { useDocument } from "react-firebase-hooks/firestore";
 import Moment from "react-moment";
-import { arrayRemove, updateDoc, arrayUnion } from "firebase/firestore";
+import { updateDoc, arrayUnion } from "firebase/firestore";
 
 export default function SubTasksSection({
   user,
