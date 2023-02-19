@@ -15,7 +15,8 @@ import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import { async } from "@firebase/util";
 
-function EditTask() {
+
+function EditTask() {  
   let { userId } = useParams();
   const [user, loading, error] = useAuthState(auth);
   const [showData, setshowData] = useState(false);//used in delete btn of all Doc
@@ -112,8 +113,7 @@ function EditTask() {
             <TitleSection
               user={user}
               userId={userId}
-              titleOnChange={titleOnChange}
-            />
+              titleOnChange={titleOnChange}    />
 
             {/* sub tasks section */}
 

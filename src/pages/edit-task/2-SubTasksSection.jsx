@@ -57,9 +57,14 @@ export default function SubTasksSection({
         </ul>
 
         {showAddNewTask && (
-          <div className="add-new-task ">
+          <form
+            className="add-new-task "
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
             <input
-            value={newItem}
+              value={newItem}
               onChange={(eo) => {
                 setnewItem(eo.target.value);
               }}
@@ -68,12 +73,13 @@ export default function SubTasksSection({
             />
             <button
               onClick={async () => {
-                  await updateDoc(doc(db, user.uid, userId), {
-                    tasks: arrayUnion(newItem),
-                  });
+                await updateDoc(doc(db, user.uid, userId), {
+                  tasks: arrayUnion(newItem),
+                });
                 setnewItem("");
               }}
               className="add"
+              type="submit"
             >
               Add
             </button>
@@ -85,7 +91,7 @@ export default function SubTasksSection({
             >
               cancel
             </button>
-          </div>
+          </form>
         )}
 
         <div className="center mtt">
