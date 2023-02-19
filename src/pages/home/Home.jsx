@@ -8,11 +8,12 @@ import { auth, db } from "../../firebase/config";
 import { Link } from "react-router-dom";
 import { sendEmailVerification } from "firebase/auth";
 import HomeModule from "./HomeModule";
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc } from "firebase/firestore";
 import AllTasksFunc from "./AllTasksPage";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-
+import { useCollection } from "react-firebase-hooks/firestore";
+import { collection, orderBy, query, limit } from "firebase/firestore";
 // Level 3
 import "./Home.css";
 import { useState } from "react";
@@ -20,11 +21,11 @@ import { useState } from "react";
 const Home = () => {
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
-  useEffect(()=>{
-    if(!user && !loading){
-      navigate("/")
+  useEffect(() => {
+    if (!user && !loading) {
+      navigate("/");
     }
-  },[])
+  }, []);
   //==========================================
   // useState and variables
   //==========================================
@@ -48,7 +49,7 @@ const Home = () => {
   };
   // get subtask from input value
   const creatTitleFunc = (eo) => {
-      settaskTitle(eo.target.value);
+    settaskTitle(eo.target.value);
   };
   //send input value to subtask function
   const creatSubTaskFunc = (eo) => {
@@ -71,36 +72,41 @@ const Home = () => {
     //when close model empty array and input fields
     setArray([]);
     settaskTitle("");
-    setsubtask("")
+    setsubtask("");
   };
   // send data to firebase func
   const submitBtnFunc = async (eo) => {
     eo.preventDefault();
-    if(array.length !== 0){
+    if (array.length !== 0) {
       setshowSubmit(true);
       await setDoc(doc(db, user.uid, `${taskId}`), {
-      completed:false,
-      title: taskTitle,
-      tasks: array,
-      id: taskId,
-    });
-    setshowSubmit(false);
-    setshowMsg(true);
-    setTimeout(() => {
-      setshowMsg(false);
-    }, 4000);
-    settaskTitle("");
-    setArray([]);
-    closeModel();
+        completed: false,
+        title: taskTitle,
+        tasks: array,
+        id: taskId,
+      });
+      setshowSubmit(false);
+      setshowMsg(true);
+      setTimeout(() => {
+        setshowMsg(false);
+      }, 4000);
+      settaskTitle("");
+      setArray([]);
+      closeModel();
     }
-    
   };
   if (error) {
     return <Erroe404 />;
   }
 
   if (loading) {
-    return <Loading />;
+    return (
+      <>
+        <Header />
+        <Loading />
+        <Footer />
+      </>
+    );
   }
 
   if (!user) {
@@ -181,21 +187,9 @@ const Home = () => {
           <Header />
 
           <main className="home">
-            {/* options(filtered data) */}
-            <section className="parent-of-btns flex mt">
-              <button>newest first</button>
-              <button>oldest first</button>
-              <select id="lang">
-                <option value="alltasks">alltasks</option>
-                <option value="completed">completed</option>
-                <option value="notcomleted">notcomleted</option>
-              </select>
-            </section>
-
             {/* show all tasks  */}
-          
-              <AllTasksFunc user={user}/>
-          
+
+            <AllTasksFunc user={user} />
 
             {/* add new task  Btn */}
             <section className="mt">

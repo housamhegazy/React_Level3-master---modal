@@ -113,10 +113,9 @@ function EditTask() {
             <TitleSection
               user={user}
               userId={userId}
-              titleOnChange={titleOnChange}    />
+              titleOnChange={titleOnChange}/>
 
             {/* sub tasks section */}
-
             <SubTasksSection
               user={user}
               userId={userId}

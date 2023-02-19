@@ -1,12 +1,18 @@
 {
   "cSpell.words": [
+    "alltasks",
     "Btns",
     "creat",
     "erroe",
     "firestore",
+    "fullyopacity",
+    "initialdata",
+    "notcompleted",
     "setemail",
     "setfirebase",
+    "setfullyopacity",
     "sethas",
+    "setinitialdata",
     "setpassword",
     "setreset",
     "setshow",

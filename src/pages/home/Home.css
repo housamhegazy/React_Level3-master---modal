@@ -46,9 +46,13 @@ show all tasks
   border-left: 5px solid antiquewhite;
   cursor:pointer;
 }
+.one-task a{
+  height: 100%;
+  display: block;
+  padding-top: 10px;
+}
 .home .all-tasks .one-task h2{
   font-size: 20px;
-  margin-top: 15px;
   margin-bottom: 10px;
 }
 
