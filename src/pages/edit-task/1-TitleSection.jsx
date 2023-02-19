@@ -22,11 +22,15 @@ export default function TitleSection({ user, userId, titleOnChange }) {
       <section className="title center">
         <h1>
           <input
-          style={{textDecoration:value.data().completed ? "line-through wavy black 4px":"none"}}
+            style={{
+              textDecoration: value.data().completed
+                ? "line-through wavy black 4px"
+                : "none",
+            }}
             onChange={(eo) => {
               titleOnChange(eo);
             }}
-            onFocus={()=>{
+            onFocus={() => {
               // removeBorder();
             }}
             className="title-input center"
@@ -36,8 +40,7 @@ export default function TitleSection({ user, userId, titleOnChange }) {
           />
           <i
             onClick={() => {
-              inputElement.current.focus();//current : the element
-
+              inputElement.current.focus(); //current : the element
             }}
             className="fa-regular fa-pen-to-square"
           ></i>
