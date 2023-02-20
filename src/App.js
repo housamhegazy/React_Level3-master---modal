@@ -11,7 +11,6 @@ import Signin from './pages/signin/Singin';
 import Signup from './pages/Signup';
 import EditTask from "pages/edit-task/Edit-Task";
 
-
 const router = createBrowserRouter([
   {
     path: "/",

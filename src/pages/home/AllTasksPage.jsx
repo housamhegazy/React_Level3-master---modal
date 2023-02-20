@@ -103,7 +103,7 @@ function AllTasksFunc({ user }) {
                   <ul>
                     {item.data().tasks.map((ele, index) => {
                       if (index < 2) {
-                        return <li key={ele}>{ele}</li>;
+                        return <li dir="auto" key={ele}>{ele}</li>;
                       } else {
                         return false;
                       }

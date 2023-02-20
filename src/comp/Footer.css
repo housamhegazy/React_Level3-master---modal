@@ -9,6 +9,9 @@
 
 .myfooter .ali{
   background-color: teal;
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .myfooter .fa-heart{

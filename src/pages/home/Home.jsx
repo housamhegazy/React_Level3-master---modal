@@ -12,8 +12,8 @@ import { doc, setDoc } from "firebase/firestore";
 import AllTasksFunc from "./AllTasksPage";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useCollection } from "react-firebase-hooks/firestore";
-import { collection, orderBy, query, limit } from "firebase/firestore";
+import { useTranslation } from "react-i18next";
+
 // Level 3
 import "./Home.css";
 import { useState } from "react";

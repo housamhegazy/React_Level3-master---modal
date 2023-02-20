@@ -20,6 +20,8 @@
     "setshow",
     "setsubtask",
     "settask",
-    "Signin"
+    "Signin",
+    "signout",
+    "العربيه"
   ]
 }

@@ -1,14 +1,21 @@
-import React from "react";
-import    './Footer.css';
+import "./Footer.css";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t, i18n } = useTranslation();
   return (
-<div className="myfooter">
-      <footer className="ali   ">
-        Designed and developed by Courses4Arab.com 
-         <span>  <i className="fa-solid fa-heart"></i> </span>
+    <div className="myfooter">
+      <footer className="ali ">
+        {i18n.language === "en" && "Designed and developed by Housam Hegazy "}
+        {i18n.language === "ar" && <p dir="rtl">تصميم وتطوير حسام حجازي </p>}
+        {i18n.language === "fr" && "Conçu et développé par HousamHegazy"}
+
+        <span>
+          {" "}
+          <i className="fa-solid fa-heart"></i>{" "}
+        </span>
       </footer>
-</div>
+    </div>
   );
 };
 

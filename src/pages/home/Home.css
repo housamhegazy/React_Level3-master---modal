@@ -71,7 +71,7 @@ show all tasks
   color:aqua;
   line-height: 19px;
   position: absolute;
-  bottom: 10px;
+  bottom: 4px;
   right: 0;
 }
 .sub-task .parent-time time{
