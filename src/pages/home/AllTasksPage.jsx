@@ -1,4 +1,4 @@
-import { collection } from "firebase/firestore";
+import { collection, where } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { db } from "../../firebase/config";
@@ -9,14 +9,14 @@ import { orderBy, query, limit } from "firebase/firestore";
 import { useState } from "react";
 
 function AllTasksFunc({user}) {
-  //opacity of order btns
-  const [fullyopacity,setfullyopacity] = useState(false)
  const [initialdata, setinitialdata] = useState(query(collection(db, user.uid), orderBy("id")))
 const [value, loading, error] = useCollection(
       initialdata
 );
-
-
+  //opacity of order btns
+  const [fullyopacity,setfullyopacity] = useState(false);
+  //select box option value to change it onChange
+  const [optValue,setoptValue] = useState("alltasks")
   if (error) {
     return (<section><Erroe404 /></section>);
   }
@@ -30,20 +30,32 @@ const [value, loading, error] = useCollection(
       <>
       {/* options(filtered data) */}
       <section className="parent-of-btns flex mt">
-      <button style={{opacity : fullyopacity? ".6": "1"}} 
+        {/* dont show buttons with completed and not completed filter */}
+      {optValue === 'alltasks' && <>
+      
+      <button style={{opacity : fullyopacity? "1": ".6"}} 
       onClick={()=>{
         setinitialdata( query(collection(db, user.uid), orderBy("id", "desc")))
         setfullyopacity(true)
       }}>newest first</button>
-      <button style={{opacity:fullyopacity?"1": ".6"}}
+      <button style={{opacity:fullyopacity?".6": "1"}}
       onClick={()=>{
         setinitialdata( query(collection(db, user.uid), orderBy("id", "asc")))
         setfullyopacity(false)
       }}>oldest first</button>
+      </>}
       <select onChange={(e)=>{
-        console.log(e.target.value)
-        // setinitialdata(query(collection(db, user.uid), orderBy("completed")))
-      }} id="lang">
+        setoptValue(e.target.value);
+        if(e.target.value === "alltasks"){
+            setinitialdata(query(collection(db, user.uid),orderBy("id")))
+        }
+        if(e.target.value === "completed"){
+            setinitialdata(query(collection(db, user.uid), where("completed", "==", true)))
+        }
+        if(e.target.value === "notcompleted"){
+            setinitialdata(query(collection(db, user.uid), where("completed", "==", false)))
+        }
+      }} value={optValue}>
         <option value="alltasks">alltasks</option>
         <option value="completed">completed</option>
         <option value="notcompleted">notcompleted</option>
