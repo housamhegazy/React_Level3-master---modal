@@ -1,12 +1,13 @@
 import { Helmet } from "react-helmet-async";
 
-function Modal({ closeModel, children }) {
+function Modal({ closeModel, children,backgroundColor="whitesmoke"}) {
   return (
     <div className="parent-of-form">
       <Helmet>
         <style type="text/css">
           {`
           .parent-of-form{
+            top:0;
             position: fixed;
             width:100%;
             height: 100%;
@@ -17,7 +18,6 @@ function Modal({ closeModel, children }) {
             
           }
           .modal{
-            background-color: whitesmoke;
             width: 400px;
             height: 333px;
             border-radius: 12px;
@@ -53,7 +53,7 @@ function Modal({ closeModel, children }) {
            `}
         </style>
       </Helmet>
-      <form className="modal">
+      <form style={{backgroundColor: `${backgroundColor}`}} className="modal">
         <div
           onClick={() => {
             closeModel();

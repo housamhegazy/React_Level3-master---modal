@@ -17,16 +17,17 @@ import { useTranslation } from "react-i18next";
 // Level 3
 import "./Home.css";
 import { useState } from "react";
+import SnackBar from "shared/SnackBar";
 
 const Home = () => {
   const [user, loading, error] = useAuthState(auth);
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const navigate = useNavigate();
   useEffect(() => {
     if (!user && !loading) {
       navigate("/");
     }
-  }, []);
+  }, [user,loading,navigate]);
   //==========================================
   // useState and variables
   //==========================================
@@ -148,7 +149,7 @@ const Home = () => {
         <>
           <Helmet>
             <title>HOME Page</title>
-            <meta name="description" content="HOMEEEEEEEEEEEE" />
+            <meta name="description" content="HOME" />
           </Helmet>
 
           <Header />
@@ -225,12 +226,7 @@ const Home = () => {
               />
             )}
             {/* show message of success sending */}
-            <p
-              style={{ right: showMsg ? "20px" : "-100vw" }}
-              className="showSuccessMsg"
-            >
-              tasks added successfully <i className="fa-solid fa-check"></i>
-            </p>
+            <SnackBar showMsg={showMsg}/>
           </main>
 
           <Footer />

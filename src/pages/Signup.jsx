@@ -14,6 +14,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
+import ReactLoading from "react-loading";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const Signup = () => {
   const [firebaseError, setfirebaseError] = useState("");
   const [userName, setuserName] = useState("");
   const [user, loading, error] = useAuthState(auth);
+  const [showSubmit, setshowSubmit] = useState(false);
 
   // Loading    (done)
   // NOT sign-in  (done)
@@ -37,13 +39,12 @@ const Signup = () => {
     }
   });
 // 
-  const signUpBTN = (eo) => {
+  const signUpBTN = async(eo) => {
     eo.preventDefault();
-
-    createUserWithEmailAndPassword(auth, email, password)
+    setshowSubmit(true);
+    await  createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
         sendEmailVerification(auth.currentUser).then(() => {
           //
           console.log("Email verification sent!");
@@ -87,7 +88,9 @@ const Signup = () => {
             setfirebaseError("Please check your email & password");
             break;
         }
+        
       });
+      setshowSubmit(false)
   };
 
 
@@ -96,7 +99,11 @@ const Signup = () => {
   }
 
   if (loading) {
-    return <Loading />;
+    return (<>
+    <Header/>
+    <Loading />
+    <Footer/>
+    </>);
   }
 
   if (user) {
@@ -161,13 +168,14 @@ const Signup = () => {
                 signUpBTN(eo);
               }}
             >
-              Sign up
+              {showSubmit ? (<ReactLoading type={"spin"} color={"red"} height={20} width={20} />):
+             " sign up"}
             </button>
             <p className="account">
-              Already hava an account <Link to="/signin"> Sign-in</Link>
+              Already have an account <Link to="/signin"> Sign-in</Link>
             </p>
-
-            {hasError && <h2>{firebaseError}</h2>}
+              
+            {hasError && <h6>{firebaseError}</h6>}
           </form>
         </main>
         <Footer />

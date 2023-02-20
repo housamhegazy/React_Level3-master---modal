@@ -16,7 +16,7 @@ function HomeModule({
   creatTitleFunc
 }) {
   return (
-    <Modal closeModel={closeModel}>
+    <Modal closeModel={closeModel} backgroundColor={"whitesmoke"} >
       <div className="add-task-content">
         {/* store input value of title in useState */}
         <input

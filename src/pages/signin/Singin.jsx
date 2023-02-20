@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./signin.css";
 import Modal from "shared/Modal";
+import ReactLoading from "react-loading";
 
 const Signin = () => {
   const [resetPass, setresetPass] = useState("");
@@ -19,6 +20,8 @@ const Signin = () => {
   const [password, setpassword] = useState("");
   const [hasError, sethasError] = useState(false);
   const [firebaseError, setfirebaseError] = useState("");
+  const [showSubmit, setshowSubmit] = useState(false);
+
   
   const [showModal, setshowModal] = useState(false);
   const forgotPassword = () => {
@@ -28,9 +31,10 @@ const Signin = () => {
     setshowModal(false);
   }
 
-const signInBTN = (eo) => {
+const signInBTN = async(eo) => {
+  setshowSubmit(true)
   eo.preventDefault();
-  signInWithEmailAndPassword(auth, email, password)
+await  signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
@@ -66,7 +70,9 @@ const signInBTN = (eo) => {
           setfirebaseError("Please check your email & password");
           break;
       }
+      
     });
+    setshowSubmit(false)
 }
 
 
@@ -139,7 +145,8 @@ const signInBTN = (eo) => {
               signInBTN(eo)
             }}
           >
-            Sign in
+              {showSubmit ? (<ReactLoading type={"spin"} color={"red"} height={20} width={20} />):
+             " sign in"}
           </button>
           <p className="account">
             Don't hava an account <Link to="/signup"> Sign-up</Link>
@@ -154,7 +161,7 @@ const signInBTN = (eo) => {
             Forgot password ?
           </p>
 
-          {hasError && <h2>{firebaseError}</h2>}
+          {hasError && <h6>{firebaseError}</h6>}
         </form>
 
 

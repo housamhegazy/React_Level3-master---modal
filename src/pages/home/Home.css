@@ -117,21 +117,7 @@ add new task Btn
   margin-bottom: 6px;
 }
 
-.showSuccessMsg{
-  background-color: white;
-  color:teal;
-  max-width: 250px;
-  font-size: 16px;
-  font-weight: normal;
-  padding:5px;
-  border-radius: 5px;
-  position: fixed;
-  top:100px;
-  transition: .3s;
-}
-.fa-check{
-  color:green
-}
+
 
 .submitBtn{
   margin-bottom: 10px;
