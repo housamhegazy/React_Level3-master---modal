@@ -96,6 +96,7 @@ add new task Btn
 
 .home .add-task-btn .fa-plus{
   font-size: 14px;
+  padding: 0 5px;
 }
 
 .Light .one-task li,

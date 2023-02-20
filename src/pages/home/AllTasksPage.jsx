@@ -7,6 +7,8 @@ import Erroe404 from "pages/erroe404";
 import Moment from "react-moment";
 import { orderBy, query, limit } from "firebase/firestore";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
 
 function AllTasksFunc({ user }) {
   const allTasks = query(collection(db, user.uid), orderBy("id"));
@@ -18,6 +20,7 @@ function AllTasksFunc({ user }) {
     collection(db, user.uid),
     where("completed", "==", false)
   );
+  const { t, i18n } = useTranslation();
 
   const [initialdata, setinitialdata] = useState(allTasks);
   const [value, loading, error] = useCollection(initialdata);
@@ -53,7 +56,9 @@ function AllTasksFunc({ user }) {
                   setfullyopacity(true);
                 }}
               >
-                newest first
+                {i18n.language === "en" && "  newest first"}
+                {i18n.language === "ar" && "  الأحدث اولا "}
+                {i18n.language === "fr" && "  le plus récent d'abord"}
               </button>
               <button
                 style={{ opacity: fullyopacity ? ".6" : "1" }}
@@ -64,7 +69,9 @@ function AllTasksFunc({ user }) {
                   setfullyopacity(false);
                 }}
               >
-                oldest first
+                {i18n.language === "en" && "  oldest first"}
+                {i18n.language === "ar" && "  الأقدم اولا "}
+                {i18n.language === "fr" && "  le plus ancien en premier"}
               </button>
             </>
           )}
@@ -84,14 +91,29 @@ function AllTasksFunc({ user }) {
             }}
             value={optValue}
           >
-            <option value="alltasks">alltasks</option>
-            <option value="completed">completed</option>
-            <option value="notcompleted">notcompleted</option>
+            <option value="alltasks">
+                {i18n.language === "en" && "alltasks"}
+                {i18n.language === "ar" && "  جميع المهام"}
+                {i18n.language === "fr" && "  Toutes les tâches"}
+            </option>
+            <option value="completed">
+                {i18n.language === "en" && "completed"}
+                {i18n.language === "ar" && "مكتمله"}
+                {i18n.language === "fr" && "  complété"}
+            </option>
+            <option value="notcompleted">
+                {i18n.language === "en" && "notcompleted"}
+                {i18n.language === "ar" && "غير مكتمله"}
+                {i18n.language === "fr" && "  pas achevé"}
+            </option>
           </select>
         </section>
         <section className="all-tasks flex mt">
-          {value.docs.length < 1 && (
-            <h1>congratulation you finished all tasks</h1>
+          {value.docs.length < 1 && (<>
+            {i18n.language === "en" && <h1>congratulation you finished all tasks</h1>}
+                {i18n.language === "ar" && <h1 dir="rtl">مبروك لقد انهيت  جميع المهام</h1>}
+                {i18n.language === "fr" && <h1>félicitations vous avez terminé toutes les tâches</h1>}
+          </>
           )}
           {value.docs.map((item, index) => {
             return (

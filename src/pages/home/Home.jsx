@@ -20,6 +20,7 @@ import { useState } from "react";
 
 const Home = () => {
   const [user, loading, error] = useAuthState(auth);
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   useEffect(() => {
     if (!user && !loading) {
@@ -193,13 +194,17 @@ const Home = () => {
 
             {/* add new task  Btn */}
             <section className="mt">
-              <button
+              <button dir="auto"
                 onClick={() => {
                   openModel();
                 }}
                 className="add-task-btn"
               >
-                Add new task <i className="fa-solid fa-plus"></i>
+                {i18n.language === "en" && " Add new task "}
+                {i18n.language === "ar" && "  اضافة مهمه جديده"}
+                {i18n.language === "fr" && " Ajouter une nouvelle tâche"}
+                
+                <i className="fa-solid fa-plus"></i>
               </button>
             </section>
             {/* show modal when press add tasks */}
