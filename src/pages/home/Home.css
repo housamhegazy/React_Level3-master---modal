@@ -107,8 +107,14 @@ add new task Btn
 .add-task-content{
   text-align: left  ;
 }
-
-
+.add-task-content .task-field{
+  display:flex;
+  justify-content:center;
+  align-items:center
+}
+.add-task-content .task-field .add{
+  height:fit-content
+}
 .home .modal ul li{
   font-size: 13px;
   color:#333;

@@ -28,9 +28,9 @@ function HomeModule({
           type="text"
           value={taskTitle}
         />
-        <div>
+        <div className={"task-field"}>
           {/* store input value in useState */}
-          <input
+          <input style={{marginBottom:"0"}}
             onChange={(eo) => {
               creatSubTaskFunc(eo)
             }}
@@ -59,7 +59,7 @@ function HomeModule({
         </ul>
         {/* submit to send tasks to firebase */}
         <button
-          className="submitBtn"
+          className="submitBtn mtt"
           onClick={(eo) => {
             submitBtnFunc(eo);
           }}
