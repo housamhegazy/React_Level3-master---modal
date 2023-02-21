@@ -44,7 +44,7 @@ function AllTasksFunc({ user }) {
       <>
         {/* options(filtered data) */}
         <section className="parent-of-btns flex mt">
-          {/* dont show buttons with completed and not completed filter */}
+          {/* dont show buttons(newest or oldest) when press completed and or completed btn */}
           {optValue === "alltasks" && (
             <>
               <button
@@ -110,11 +110,12 @@ function AllTasksFunc({ user }) {
         </section>
         <section className="all-tasks flex mt">
           {value.docs.length < 1 && (<>
-            {i18n.language === "en" && <h1>congratulation you finished all tasks</h1>}
+                {i18n.language === "en" && <h1>congratulation you finished all tasks</h1>}
                 {i18n.language === "ar" && <h1 dir="rtl">مبروك لقد انهيت  جميع المهام</h1>}
                 {i18n.language === "fr" && <h1>félicitations vous avez terminé toutes les tâches</h1>}
           </>
           )}
+        
           {value.docs.map((item, index) => {
             return (
               <article key={item.data().id} dir="auto" className="one-task">
